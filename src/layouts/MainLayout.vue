@@ -1,43 +1,60 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
+    <q-header>
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
-
         <q-toolbar-title>
           Quasar App
         </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <div class="flex row justify-around items-center q-ml-sm">
+          <q-select
+            borderless
+
+            :options="language_list"
+            v-model="language"
+
+            @update:model-value="selectLanguage"
+          >
+            <q-tooltip>
+              {{ $t('tooltip_select_language') }}
+            </q-tooltip>
+
+
+            <template v-slot:selected>
+              <q-img width="25px" :src="'flags/' + language.flag + '_flag.png'" :alt="language.flag + '_flag'" :ratio="3/2"/>
+            </template>
+
+            <template v-slot:option="scope">
+              <q-item v-bind="scope.itemProps">
+                <q-item-section avatar>
+                  <q-img width="50px" :src="'flags/' + scope.opt.flag + '_flag.png'" :alt="scope.opt.flag + '_flag'" :ratio="3/2"/>
+                </q-item-section>
+                <q-item-section>
+                  <q-item-label>{{ scope.opt.label }}</q-item-label>
+                </q-item-section>
+              </q-item>
+            </template>
+          </q-select>
+
+
+          <q-btn
+            flat
+            round
+
+            size="md"
+            padding="sm"
+
+            :icon="dark_mode ? 'dark_mode':'light_mode'"
+
+            @click="toggleDarkMode"
+          >
+            <q-tooltip>
+              {{ $t('tooltip_dark_mode') }}
+            </q-tooltip>
+          </q-btn>
+        </div>
       </q-toolbar>
     </q-header>
-
-    <q-drawer
-      v-model="leftDrawerOpen"
-      show-if-above
-      bordered
-    >
-      <q-list>
-        <q-item-label
-          header
-        >
-          Essential Links
-        </q-item-label>
-
-        <EssentialLink
-          v-for="link in essentialLinks"
-          :key="link.title"
-          v-bind="link"
-        />
-      </q-list>
-    </q-drawer>
 
     <q-page-container>
       <router-view />
@@ -46,71 +63,33 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
-import EssentialLink from 'components/EssentialLink.vue';
-
-const linksList = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev'
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework'
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev'
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev'
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev'
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev'
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev'
-  }
-];
+import { defineComponent } from 'vue';
+import { useUserStore } from 'stores/user-store'
+import { mapActions, mapState, mapWritableState } from 'pinia';
+import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
   name: 'MainLayout',
 
-  components: {
-    EssentialLink
-  },
+  setup() {
+    const { locale } = useI18n({ useScope: 'global' })
+    const userStore = useUserStore()
 
-  setup () {
-    const leftDrawerOpen = ref(false)
+    userStore.initDarkMode()
+    userStore.selectLanguage()
 
     return {
-      essentialLinks: linksList,
-      leftDrawerOpen,
-      toggleLeftDrawer () {
-        leftDrawerOpen.value = !leftDrawerOpen.value
-      }
+      locale
     }
+  },
+
+  computed: {
+    ...mapWritableState(useUserStore, ['dark_mode', 'language']),
+    ...mapState(useUserStore, ['language_list']),
+  },
+
+  methods: {
+    ...mapActions(useUserStore, ['toggleDarkMode', 'selectLanguage']),
   }
 });
 </script>

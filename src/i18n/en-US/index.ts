@@ -3,5 +3,7 @@
 
 export default {
   failed: 'Action failed',
-  success: 'Action was successful'
+  success: 'Action was successful',
+  tooltip_dark_mode: 'Toggle Dark Mode',
+  tooltip_select_language: 'Select the display language'
 };
