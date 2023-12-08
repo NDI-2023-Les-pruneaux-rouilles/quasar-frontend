@@ -1,10 +1,56 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header>
+    <q-header class="header q-py-lg q-px-lg">
       <q-toolbar>
-        <q-toolbar-title>
-          Quasar App
-        </q-toolbar-title>
+        <div class="flex row items-center q-mr-xl">
+          <q-img
+            class="q-mr-md"
+            width="45px"
+            src="prune.png"
+          />
+          <div
+            :class="'flex column header-title ' + (dark_mode ? 'text-white':'text-grey-7')"
+          >
+            <div class="text-left">PRUNE</div>
+            <div class="text-right">&nbsp;&nbsp;&nbsp;&nbsp;CONCEPT</div>
+          </div>
+        </div>
+
+        <q-tabs inline-label class="text-grey-6">
+          <q-route-tab
+            :label="$t('header_home')"
+            icon="home"
+            to="/"
+            exact
+          />
+          <q-route-tab
+            :label="$t('header_learn')"
+            icon="school"
+            to="/learn"
+            exact
+          />
+          <q-route-tab
+            :label="$t('header_swipe')"
+            icon="swipe"
+            to="/tinder"
+            exact
+          />
+          <q-route-tab
+            :label="$t('header_tools')"
+            icon="construction"
+            to="/tools"
+            exact
+          />
+          <q-route-tab
+            :label="$t('header_get_involved')"
+            icon="groups"
+            to="/get-involved"
+            exact
+          />
+        </q-tabs>
+
+
+        <q-space />
 
         <div class="flex row justify-around items-center q-ml-sm">
           <q-select
@@ -45,6 +91,7 @@
             padding="sm"
 
             :icon="dark_mode ? 'dark_mode':'light_mode'"
+            :color="dark_mode ? 'white':'grey-8'"
 
             @click="toggleDarkMode"
           >
@@ -59,6 +106,13 @@
     <q-page-container>
       <router-view />
     </q-page-container>
+
+
+    <q-footer class="bg-transparent">
+      <div class="q-py-sm q-mx-auto text-center text-caption text-grey">
+        <a href="https://nuitdelinfo.com/" class="text-grey">Nuit de l'info 2023</a>  — &copy; Julien CAPOSIENA Johan PANCHON
+      </div>
+    </q-footer>
   </q-layout>
 </template>
 
@@ -93,3 +147,16 @@ export default defineComponent({
   }
 });
 </script>
+
+<style lang="scss">
+
+.header {
+  background: linear-gradient(0deg, rgb(0, 0, 0, 0), transparentize($brown, 0.75));
+}
+
+.header-title {
+  font-family: "Segoe UI Black", sans-serif;
+  font-weight: bolder;
+}
+
+</style>

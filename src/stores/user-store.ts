@@ -4,7 +4,7 @@ import { i18n } from 'boot/i18n';
 
 interface Language {
   label: string
-  value: "en-US" | "fr-FR"
+  value: 'en-US' | 'fr-FR'
   flag: string
 }
 
@@ -23,7 +23,7 @@ const language_list: Language[] = [
 
 export const useUserStore = defineStore('user', {
   state: () => ({
-    dark_mode: false,
+    dark_mode: true,
 
     language_list: language_list,
     language: language_list[0]

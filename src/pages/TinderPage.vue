@@ -1,6 +1,6 @@
 <template>
   <q-page class="row items-center justify-evenly">
-      <p>TEST</p>
+
   </q-page>
 </template>
 
@@ -10,11 +10,11 @@ import { useMeta } from 'quasar';
 
 const metaData = {
   title: 'Prune Concept',
-  titleTemplate: (title: string) => `${title}`,
+  titleTemplate: (title: string) => `${title} – Test your knowledge`,
 }
 
 export default defineComponent({
-  name: 'IndexPage',
+  name: 'TinderPage',
   setup() {
     useMeta(metaData)
   }
