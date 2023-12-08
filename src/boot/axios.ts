@@ -8,6 +8,9 @@ declare module '@vue/runtime-core' {
   }
 }
 
+
+axios.defaults.headers.post['Access-Control-Allow-Origin'] = '*'
+
 // Be careful when using SSR for cross-request state pollution
 // due to creating a Singleton instance here;
 // If any client changes this (global) instance, it might be a

@@ -32,7 +32,7 @@
           <q-route-tab
             :label="$t('header_swipe')"
             icon="swipe"
-            to="/tinder"
+            to="/swipe"
             exact
           />
           <q-route-tab
@@ -104,7 +104,7 @@
     </q-header>
 
     <q-page-container>
-      <router-view />
+      <router-view class="q-px-xl q-py-md"/>
     </q-page-container>
 
 

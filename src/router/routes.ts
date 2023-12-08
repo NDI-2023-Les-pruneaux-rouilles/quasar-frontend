@@ -14,7 +14,7 @@ const routes: RouteRecordRaw[] = [
   },
 
   {
-    path: '/tinder',
+    path: '/swipe',
     component: () => import('layouts/MainLayout.vue'),
     children: [{ path: '', component: () => import('pages/TinderPage.vue') }],
   },
